@@ -229,6 +229,62 @@ function eprofit1() {
 }
 
 $(document).ready(function () {
+    document.getElementById('percent1').addEventListener("keyup", function () {
+        if (document.getElementById('percent1').value.toString() == "") {
+            return;
+        }
+        var percent1 = document.getElementById('percent1').value;
+        document.getElementById('percent1').value = parseFloat(document.getElementById('interest').value) * 0.006;
+        document.getElementById('percent1').value = f(percent1);
+        percent1 = parseFloat((percent1).toString().replace(/\./g, '').replace(',', '.'));
+
+        var repayment = (percent1) / 0.006;
+
+        document.getElementById('interest').value = (parseFloat(repayment)).toString().replace('.', ',');
+        
+        if (isNaN(parseFloat(document.getElementById('interest').value)) || document.getElementById('interest').value.toString() == 'NaN') {
+            document.getElementById('interest').value = 0;
+        } 
+        eprofit1();
+    })
+
+    document.getElementById('percent1').addEventListener("blur", function () {
+        if (document.getElementById('percent1').value.toString() == "") {
+            document.getElementById('percent1').value = 0;
+            eprofit1();
+        }
+    })
+
+    document.getElementById('percent2').addEventListener("keyup", function () {
+        if (document.getElementById('percent2').value.toString() == "") {
+            return;
+        }
+        var percent2 = document.getElementById('percent2').value;
+        document.getElementById('percent2').value = parseFloat(document.getElementById('repayment').value) * 0.006;
+        document.getElementById('percent2').value = f(percent2);
+        percent2 = parseFloat((percent2).toString().replace(/\./g, '').replace(',', '.'));
+        
+        var repayment = (percent2) / 0.006;
+
+        document.getElementById('repayment').value = (parseFloat(repayment)).toString().replace('.', ',');
+        
+        if (isNaN(parseFloat(document.getElementById('repayment').value)) || document.getElementById('repayment').value.toString() == 'NaN') {
+            document.getElementById('repayment').value = 0;
+        } else {
+            document.getElementById('amrt').value = f(percent2);
+        }
+        eprofit1();
+    })
+
+    document.getElementById('percent2').addEventListener("blur", function () {
+        if (document.getElementById('percent2').value.toString() == "") {
+            document.getElementById('percent2').value = 0;
+            eprofit1();
+        }
+    })
+});
+
+$(document).ready(function () {
 
     [document.getElementById('price'), document.getElementById('capital-2'), document.getElementById('capital')
         , document.getElementById('amrt'), document.getElementById('aprct'), document.getElementById('duration'), document.getElementById('interest') , document.getElementById('repayment')].forEach(function (element) {
@@ -718,60 +774,6 @@ function built() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    document.getElementById('percent1').addEventListener("keyup", function () {
-        if (document.getElementById('percent1').value.toString() == "") {
-            return;
-        }
-        var percent1 = document.getElementById('percent1').value;
-        document.getElementById('percent1').value = parseFloat(document.getElementById('interest').value) * 0.006;
-        document.getElementById('percent1').value = f(percent1);
-        percent1 = parseFloat((percent1).toString().replace(/\./g, '').replace(',', '.'));
-
-        var repayment = (percent1) / 0.006;
-
-        document.getElementById('interest').value = (parseFloat(repayment)).toString().replace('.', ',');
-        
-        if (isNaN(parseFloat(document.getElementById('interest').value)) || document.getElementById('interest').value.toString() == 'NaN') {
-            document.getElementById('interest').value = 0;
-        } 
-        eprofit1();
-    })
-
-    document.getElementById('percent1').addEventListener("blur", function () {
-        if (document.getElementById('percent1').value.toString() == "") {
-            document.getElementById('percent1').value = 0;
-            eprofit1();
-        }
-    })
-    
-    document.getElementById('percent2').addEventListener("keyup", function () {
-        if (document.getElementById('percent2').value.toString() == "") {
-            return;
-        }
-        var percent2 = document.getElementById('percent2').value;
-        document.getElementById('percent2').value = parseFloat(document.getElementById('repayment').value) * 0.006;
-        document.getElementById('percent2').value = f(percent2);
-        percent2 = parseFloat((percent2).toString().replace(/\./g, '').replace(',', '.'));
-        
-        var repayment = (percent2) / 0.006;
-
-        document.getElementById('repayment').value = (parseFloat(repayment)).toString().replace('.', ',');
-        
-        if (isNaN(parseFloat(document.getElementById('repayment').value)) || document.getElementById('repayment').value.toString() == 'NaN') {
-            document.getElementById('repayment').value = 0;
-        } else {
-            document.getElementById('amrt').value = f(percent2);
-        }
-        eprofit1();
-    })
-
-    document.getElementById('percent2').addEventListener("blur", function () {
-        if (document.getElementById('percent2').value.toString() == "") {
-            document.getElementById('percent2').value = 0;
-            eprofit1();
-        }
-    })
 
     [document.getElementById('interest'), document.getElementById('repayment'), document.getElementById('admin'), document.getElementById('misc1')].forEach(function (element) {
 
