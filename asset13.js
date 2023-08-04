@@ -197,14 +197,13 @@ function eprofit1() {
 
     var ans1 = parseInt(Math.round((((kauf) - (equity)) * percent1 * 0.01) / 12));
     var ans2 = parseInt(Math.round((((kauf) - (equity)) * percent2 * 0.01) / 12));
-
     
     document.getElementById('interest').value = f(ans1);
     document.getElementById('repayment').value = f(ans2);
-let ue = ans1 + ans2;
+    
+    let ue = ans1 + ans2;
+    
     document.getElementById("s21").textContent = f(ue);
-
-
 
     let w = document.getElementById("percent1").value;
     w = parseFloat((w).toString().replace(/\./g, '').replace(',', '.'));
@@ -217,12 +216,16 @@ let ue = ans1 + ans2;
 
     de = Math.round(oe)
 
+    
     document.getElementById("out-loan").textContent = f(de);
+    
     var ge = document.getElementById("out-price").textContent;
     pe = parseInt(g(ge)) - de
+    
     document.getElementById("out-profit").textContent = f(pe);
     // document.getElementById("asct").textContent = f(pe) + " €";
     document.getElementById("profits-2").textContent = f(pe) + " €";
+    
 }
 
 $(document).ready(function () {
@@ -717,25 +720,57 @@ function built() {
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('percent1').addEventListener("keyup", function () {
+        if (document.getElementById('percent1').value.toString() == "") {
+            return;
+        }
         var percent1 = document.getElementById('percent1').value;
+        document.getElementById('percent1').value = parseFloat(document.getElementById('interest').value) * 0.006;
         document.getElementById('percent1').value = f(percent1);
         percent1 = parseFloat((percent1).toString().replace(/\./g, '').replace(',', '.'));
+
+        var repayment = (percent1) / 0.006;
+
+        document.getElementById('interest').value = (parseFloat(repayment)).toString().replace('.', ',');
         
-        var interest = (percent1) / 0.006;
-        document.getElementById('interest').value = (parseFloat(interest)).toString().replace('.', ',');
+        if (isNaN(parseFloat(document.getElementById('interest').value)) || document.getElementById('interest').value.toString() == 'NaN') {
+            document.getElementById('interest').value = 0;
+        } 
         eprofit1();
+    })
+
+    document.getElementById('percent1').addEventListener("blur", function () {
+        if (document.getElementById('percent1').value.toString() == "") {
+            document.getElementById('percent1').value = 0;
+            eprofit1();
+        }
     })
     
     document.getElementById('percent2').addEventListener("keyup", function () {
+        if (document.getElementById('percent2').value.toString() == "") {
+            return;
+        }
         var percent2 = document.getElementById('percent2').value;
+        document.getElementById('percent2').value = parseFloat(document.getElementById('repayment').value) * 0.006;
         document.getElementById('percent2').value = f(percent2);
         percent2 = parseFloat((percent2).toString().replace(/\./g, '').replace(',', '.'));
-    
-        document.getElementById('amrt').value = f(percent2);
         
         var repayment = (percent2) / 0.006;
+
         document.getElementById('repayment').value = (parseFloat(repayment)).toString().replace('.', ',');
+        
+        if (isNaN(parseFloat(document.getElementById('repayment').value)) || document.getElementById('repayment').value.toString() == 'NaN') {
+            document.getElementById('repayment').value = 0;
+        } else {
+            document.getElementById('amrt').value = f(percent2);
+        }
         eprofit1();
+    })
+
+    document.getElementById('percent2').addEventListener("blur", function () {
+        if (document.getElementById('percent2').value.toString() == "") {
+            document.getElementById('percent2').value = 0;
+            eprofit1();
+        }
     })
 
     [document.getElementById('interest'), document.getElementById('repayment'), document.getElementById('admin'), document.getElementById('misc1')].forEach(function (element) {
